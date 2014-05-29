@@ -6,7 +6,7 @@ It can extract image patch(figure.2 ) from many printing forms(figure. 1), and b
 
 If you want a README of English version, please let me know.
 
-** 这是一个方便自制手写数字数据集的工具。它可以：抽取 『手写数字方格纸』（如figure.1） 的格子内图像，并自动生测试集（如figure.2）和数据集标签 testLabel.txt **
+这是一个方便自制手写数字数据集的工具。它可以：抽取 『手写数字方格纸』（如figure.1） 的格子内图像，并自动生测试集（如figure.2）和数据集标签 testLabel.txt
   
 ![example OCR](./1_form/0/wifi0s0-128194561IMG_20140529_204434.jpg)
 
