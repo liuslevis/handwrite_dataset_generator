@@ -8,14 +8,14 @@ If you want a README of English version, please let me know.
 
 ** 这是一个方便自制手写数字数据集的工具。它可以：抽取 『手写数字方格纸』（如figure.1） 的格子内图像，并自动生测试集（如figure.2）和数据集标签 testLabel.txt **
   
-![example OCR](./1_form/0/wifi0s0-128194561IMG_20140529_204434.jpg =250x)
+![example OCR](./1_form/0/wifi0s0-128194561IMG_20140529_204434.jpg)
 
 figure. 1
 
-![example OCR](./img/0001.tiff =25x)
-![example OCR](./img/0002.tiff =25x)
-![example OCR](./img/0003.tiff =25x)
-![example OCR](./img/0004.tiff =25x)
+![example OCR](./img/0001.tiff)
+![example OCR](./img/0002.tiff)
+![example OCR](./img/0003.tiff)
+![example OCR](./img/0004.tiff)
 
 figure. 2
 
