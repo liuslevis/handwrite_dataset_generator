@@ -12,10 +12,10 @@ If you want a README of English version, please let me know.
 
 figure. 1
 
-![example OCR](./img/0001.tiff)
-![example OCR](./img/0002.tiff)
-![example OCR](./img/0003.tiff)
-![example OCR](./img/0004.tiff)
+![example OCR](./img/0001.png)
+![example OCR](./img/0002.png)
+![example OCR](./img/0003.png)
+![example OCR](./img/0004.png)
 
 figure. 2
 
