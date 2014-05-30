@@ -15,6 +15,10 @@
 #define SHOW_MID_IMG false
 #define APDATIVE_THRESH_BLOCK_SIZE 3
 #define APDATIVE_THRESH_C 5
+#define DEBUG false
+
+#define ERODE_ELE_SIZE 5
+
 // angle: helper function.
 // Finds a cosine of angle between vectors from pt0->pt1 and from pt0->pt2.
 double angle( cv::Point pt1, cv::Point pt2, cv::Point pt0 )
@@ -126,13 +130,25 @@ int main(int argc, char* argv[])
     // Load input image (colored, 3-channel)
 
     std::string result_dir = "output/";
-
+    std::string img_path = "";
     if(argc <= 1){
         std::cout << "!BoxExtraction 提取img_path图像内，方格字块中的图像，结果存储到文件result_dir中" << std::endl;
         std::cout << "!USAGE: ./main <img_path> [result_dir=./output]" << std::endl;
         return -1;
     }
-    cv::Mat input = cv::imread(argv[1]);
+    if(argc > 1){
+        img_path = argv[1];
+    }
+
+    // Resize
+    cv::Mat bigger = cv::imread(argv[1]);
+    double scale = 0.8;
+    cv::Size dsize = cv::Size(bigger.cols*scale,bigger.rows*scale);
+    cv::Mat input = cv::Mat(dsize,CV_32S);
+    cv::resize(bigger,input,dsize);
+
+    // origin size
+    // cv::Mat input = cv::imread(argv[1]);
 
     if(argc > 2){
         result_dir = argv[2];
@@ -143,6 +159,8 @@ int main(int argc, char* argv[])
         std::cout << "!!! failed imread(), check dir:" << argv[1] << std::endl;
         return -1;
     }   
+
+
 
     // Convert input image to grayscale (1-channel)
     cv::Mat grayscale = input.clone();
@@ -185,7 +203,7 @@ int main(int argc, char* argv[])
 
     // Erode & Dilate to isolate segments connected to nearby areas
     int erosion_type = cv::MORPH_RECT; 
-    int erosion_size = 5;
+    int erosion_size = ERODE_ELE_SIZE;
     cv::Mat element = cv::getStructuringElement(erosion_type, 
                                                 cv::Size(2 * erosion_size + 1, 2 * erosion_size + 1), 
                                                 cv::Point(erosion_size, erosion_size));
@@ -197,7 +215,8 @@ int main(int argc, char* argv[])
     // Ok, let's go ahead and try to detect all rectangular shapes
     std::vector<std::vector<cv::Point> > squares;
     findSquares(binary, squares);
-    std::cout << "* Rectangular shapes found: "  << squares.size()/2 << std::endl;
+    
+    std::cout << "* img:" << img_path << " found rectangle number:" << squares.size() << " Save to:"<<result_dir<< std::endl;
 
     // Draw all rectangular shapes found
     cv::Mat output = input.clone();
@@ -209,7 +228,7 @@ int main(int argc, char* argv[])
     if (squares.size() == 1)
     {    
         cv::Rect box = cv::boundingRect(cv::Mat(squares[0]));
-        std::cout << "* The location of the box is x:" << box.x << " y:" << box.y << " " << box.width << "x" << box.height << std::endl;
+        if(DEBUG) std::cout << "* The location of the box is x:" << box.x << " y:" << box.y << " " << box.width << "x" << box.height << std::endl;
 
         // Crop the original image to the defined ROI
         cv::Mat crop = input(box);
@@ -218,11 +237,9 @@ int main(int argc, char* argv[])
     }
     else
     {
-        std::cout << "* Save to ./output , rectangle number:" << squares.size() << std::endl;
-
         for( int i = 0; i < squares.size(); i++){
             cv::Rect box = cv::boundingRect(cv::Mat(squares[i]));
-            std::cout << "* The location of the box is x:" << box.x << " y:" << box.y << " " << box.width << "x" << box.height << std::endl;
+            if(DEBUG) std::cout << "* The location of the box is x:" << box.x << " y:" << box.y << " " << box.width << "x" << box.height << std::endl;
 
             // Crop the original image to the defined ROI
             cv::Mat crop = input(box);

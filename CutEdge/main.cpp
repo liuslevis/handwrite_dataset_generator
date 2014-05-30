@@ -12,6 +12,7 @@
 
 #define SAVE_MID_IMG true
 #define SHOW_MID_IMG false
+#define DEBUG false
 
 
 
@@ -98,7 +99,7 @@ int main(int argc, char* argv[])
         return -1;
     }   
 
-    std::cout << "* begin to cut image:" << input_img_path << " @w"<< input.cols <<"h" << input.rows <<" @cutRate:" << cutRate << std::endl;
+    if (DEBUG) std::cout << "* begin to cut image:" << input_img_path << " @w"<< input.cols <<"h" << input.rows <<" @cutRate:" << cutRate << std::endl;
 
 
     std::vector<std::vector<cv::Point> > squares;
@@ -113,7 +114,7 @@ int main(int argc, char* argv[])
     if (squares.size() == 1)
     {    
         cv::Rect box = cv::boundingRect(cv::Mat(squares[0]));
-        std::cout << "* The location of the box is x:" << box.x << " y:" << box.y << " " << box.width << "x" << box.height << std::endl;
+        if (DEBUG) std::cout << "* The location of the box is x:" << box.x << " y:" << box.y << " " << box.width << "x" << box.height << std::endl;
 
         // Crop the original image to the defined ROI
         cv::Mat crop = input(box);
@@ -127,7 +128,7 @@ int main(int argc, char* argv[])
         if (SAVE_MID_IMG) cv::imwrite("mid_process/7_cropped.tiff", crop);
 
         cv::imwrite(save_path, crop);
-        std::cout<< "* save result:" << save_path << std::endl;
+        if (DEBUG) std::cout<< "* save result:" << save_path << std::endl;
     }
     else
     {
