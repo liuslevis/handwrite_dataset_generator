@@ -1,6 +1,10 @@
 import os
 import shutil
 
+
+DEBUG = False
+img_suffix = ['.jpeg','.jpg','.png','.tiff']
+
 def gen_img_unique_file_name(count,total):
     assert(count<=total)
     name = ''
@@ -13,6 +17,7 @@ def gen_img_unique_file_name(count,total):
     return name
 
 def copy_img_file(src_path,save_data_path,filename):
+    if DEBUG: print src_path,filename
     print src_path,filename
     if not os.path.isdir(save_data_path):
         os.mkdir(save_data_path)
@@ -50,14 +55,13 @@ def gen_label_file(dict,save_label_path):
 
 
 def main():
-    DEBUG = False
     save_label_path = './4_dataset/testLabel.txt'
     save_data_path = './4_dataset/'
     rootDir ='./3_cropped'
     dict = {} # store num of each digit labels
     total = count_img_under_dir(rootDir)
     uid = 0
-    suffix = None
+    suffix = ""
     print 'total_img:',total
     for label_paths in os.listdir(rootDir): 
         label_path = os.path.join(rootDir, label_paths) 
@@ -67,20 +71,19 @@ def main():
             assert( label >= 0 and label <=9)
             for img_path in os.listdir(label_path):
                 if DEBUG: print img_path
-                if suffix is None:
+                if suffix not in img_suffix:
                     (filepath,filename)=os.path.split(img_path)
                     suffix = os.path.splitext(filename)[-1]
-                    print suffix
-
-                count = dict.get(label)
-                if None == count:
-                    dict.update({label:1})
-                else:
-                    count += 1
-                    dict.update({label:count})
-                uid+=1
-                save_name = gen_img_unique_file_name(uid,total)
-                copy_img_file(os.path.join(label_path,img_path),save_data_path, save_name+suffix )
+                if suffix in img_suffix:
+                    count = dict.get(label)
+                    if None == count:
+                        dict.update({label:1})
+                    else:
+                        count += 1
+                        dict.update({label:count})
+                    uid+=1
+                    save_name = gen_img_unique_file_name(uid,total)
+                    copy_img_file(os.path.join(label_path,img_path),save_data_path, save_name+suffix )
 
 
 
