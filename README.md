@@ -33,15 +33,19 @@ figure. 2
 
 4. 扫描出的图像，分类放入其中1_form文件夹中（手写数字1的『方格纸』放入 1_form/1 文件夹中，以此类推）。
 
-5. Linux系统下执行  （Windows下请参考这个.sh改写）
+5. *nix系统下执行，或者手动执行6 7步
+	>./0_run_all.sh
+
+6. Linux系统下执行  （Windows下请参考这个.sh改写）
 	>./2_run_preprocess.sh   
   
 	程序自动把图片方格字块提取出来，存到3_cropped文件夹中。请人工检查3_cropped中的0 1 2 3...文件夹内的数字图像与文件名相符
 
-6. 生成手写数字数据集  
+7. 生成手写数字数据集  
 	> python 3_gen_digit_data_label.py
 	
-	程序自动生成数据集，存放在4_dataset文件夹中。请确认有生成了：许多000xx.tiff格式的手写字体图像和一个testLabel.txt标签文件。标签文件每行记录对应序号的数字图像的label。
+	
+8. 得到程序自动生成的数据集，在4_dataset文件夹中。请确认有生成了：许多000xx.tiff格式的手写字体图像和一个testLabel.txt标签文件。标签文件每行记录对应序号的数字图像的label。
 
   ---
 ## 附录

@@ -246,7 +246,7 @@ int main(int argc, char* argv[])
             if (SHOW_MID_IMG) cv::imshow("crop", crop);
 
             char savename[50];
-            sprintf(savename,"%s/%d_cropped.tiff",result_dir.c_str(),i);
+            sprintf(savename,"%s/%lu_cropped.tiff",result_dir.c_str(), std::clock());
             if (SAVE_MID_IMG) cv::imwrite(savename, crop);
 
         }
